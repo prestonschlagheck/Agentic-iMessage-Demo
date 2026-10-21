@@ -1,7 +1,5 @@
 # Agentic iMessage Demo
 
-<a href="https://youtube.com/shorts/lkgwtGP3sQY"><img src=".github/demo.jpg" alt="Watch the walkthrough" width="280"></a>
-
 This is my approach to Persona's onboarding. It runs in an iPhone simulator in the browser, with the usual iPhone interactions: texts, tapbacks, contact cards, an incoming call screen and a real two-way voice call. It opens the same way Persona's onboarding does today, then adapts to how each person behaves after those first steps.
 
 It collects the agent's name over text, then calls to get your name, what you want help with, and a connected Gmail. Once Gmail connects, it tells you something real from your inbox.
