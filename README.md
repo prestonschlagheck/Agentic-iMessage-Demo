@@ -6,7 +6,6 @@ It collects the agent's name over text, then calls to get your name, what you wa
 
 - **Live:** https://persona-demo.personademobuild.workers.dev
 - **Walkthrough video:** https://youtube.com/shorts/lkgwtGP3sQY
-- **Feedback from using Persona:** https://docs.google.com/document/d/19lYRKugBFKeNnG719gKKEy3ANb0C9wm6H7PbU_lqook/edit?usp=sharing
 
 Google will say the app is unverified. Tap Advanced, then continue.
 
