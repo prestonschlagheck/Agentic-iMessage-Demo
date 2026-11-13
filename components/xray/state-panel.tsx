@@ -1,7 +1,7 @@
 "use client";
 
 import { cx } from "@/components/ios/ui";
-import { Pill } from "@/components/stage/pill";
+import { Pill } from "./pill";
 import { useCall } from "@/lib/client/call-context";
 import { clockTime, formatDuration } from "@/lib/client/format";
 import { useOnboarding } from "@/lib/client/onboarding";
