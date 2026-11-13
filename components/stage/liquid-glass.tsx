@@ -24,11 +24,15 @@ type Shape = { radius?: number; bezel?: number; flat?: "top" | "bottom" };
 
 const noop = () => () => {};
 
+/** userAgentData ships only in Chromium, the one engine that renders SVG filters in backdrop-filter. False on the server. */
+export function useGlassSupported(): boolean {
+  return useSyncExternalStore(noop, () => "userAgentData" in navigator, () => false);
+}
+
 /** Attach `measure` to the glass, spread `style` onto it, and render `filter` beside it. */
 export function useLiquidGlass({ radius, bezel = 22, flat }: Shape = {}): { measure: RefCallback<HTMLElement>; style?: CSSProperties; filter: ReactNode } {
   const id = `glass-${useId().replace(/:/g, "")}`;
-  // userAgentData ships only in Chromium, the one engine that renders SVG filters in backdrop-filter.
-  const supported = useSyncExternalStore(noop, () => "userAgentData" in navigator, () => false);
+  const supported = useGlassSupported();
   const [size, setSize] = useState<Size | null>(null);
   const [el, setEl] = useState<HTMLElement | null>(null);
 

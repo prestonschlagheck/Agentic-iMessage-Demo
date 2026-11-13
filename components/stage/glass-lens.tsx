@@ -1,6 +1,7 @@
 "use client";
 
-import { useId, useMemo, useSyncExternalStore, type CSSProperties, type ReactNode } from "react";
+import { useId, useMemo, type CSSProperties, type ReactNode } from "react";
+import { useGlassSupported } from "./liquid-glass";
 
 // A small Liquid Glass lens, for a slider's thumb: it magnifies what is under it a little, bends it harder at the
 // rim, splits the colors there, and frosts it lightly. The pill-sized refraction in liquid-glass.tsx bends 20px,
@@ -17,12 +18,10 @@ const RANGE = 14;
 const DISPERSION = [1, 0.9, 0.8] as const;
 const FROST = 0.8;
 
-const noop = () => () => {};
-
 /** Spread `style` onto an element of exactly `width` x `height` px (before any transform) and render `filter` beside it. */
 export function useGlassLens(width: number, height: number): { style?: CSSProperties; filter: ReactNode } {
   const id = `lens-${useId().replace(/:/g, "")}`;
-  const supported = useSyncExternalStore(noop, () => "userAgentData" in navigator, () => false);
+  const supported = useGlassSupported();
   const map = useMemo(() => (supported ? lensMap(width, height) : null), [supported, width, height]);
   if (!map) return { filter: null };
 
