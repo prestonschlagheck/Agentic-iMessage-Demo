@@ -3,7 +3,8 @@ import { notFound, redirect } from "next/navigation";
 import { MOCK_ACCOUNTS } from "@/lib/gmail/fixtures";
 import { BASE_SCOPES, CALENDAR_SCOPE, DRIVE_SCOPE, extraScopes, gmailScope } from "@/lib/gmail/oauth";
 import { getModes } from "@/lib/server/config";
-import { ConnectCard, primaryPill, secondaryPill } from "../connect-card";
+import { primaryPill, secondaryPill } from "@/app/pills";
+import { ConnectCard } from "../connect-card";
 
 // Stands in for Google's consent screen while no Google keys are set, and does not exist once they are.
 // It stays neutral, with no Google branding, and asks for exactly what the real request asks for. It

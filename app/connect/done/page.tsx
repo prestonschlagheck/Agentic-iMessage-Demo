@@ -4,7 +4,8 @@ import { PersonaWordmark } from "@/components/brand/persona-logo";
 import { CheckIcon, CloseIcon } from "@/components/ios/icons";
 import { cx } from "@/components/ios/ui";
 import { connectedEmail, type OAuthResult } from "@/lib/gmail/oauth";
-import { ConnectCard, primaryPill } from "../connect-card";
+import { primaryPill } from "@/app/pills";
+import { ConnectCard } from "../connect-card";
 import { ReportToOpener } from "./report-to-opener";
 
 // Where Google sign-in returns, mirroring Persona's own return page. It says what happened in one line

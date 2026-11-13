@@ -3,7 +3,7 @@ import Link from "next/link";
 import { PersonaWordmark } from "@/components/brand/persona-logo";
 import { cx } from "@/components/ios/ui";
 import { readSession, requireSession } from "@/lib/server/session-service";
-import { primaryPill } from "../connect/connect-card";
+import { primaryPill } from "@/app/pills";
 import { DeleteAccount } from "./delete-account";
 
 // The page the agent's dashboard link opens, in the style of Persona's own app: Home, and under Data privacy the

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { cx } from "@/components/ios/ui";
 import { api } from "@/lib/client/api";
-import { pill, primaryPill, secondaryPill } from "../connect/connect-card";
+import { pill, primaryPill, secondaryPill } from "@/app/pills";
 
 type Step = "idle" | "confirm" | "deleting" | "done" | "failed";
 
