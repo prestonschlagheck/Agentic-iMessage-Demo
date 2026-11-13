@@ -63,7 +63,10 @@ export const BRAIN_KINDS = new Set<EventKind>([
   "stopped",
   "chat",
 ]);
-const MAX_BUBBLE = 1_000;
+export const MAX_BUBBLE = 1_000;
+// How far back a text turn reads: enough for the text agent's window and the digest before it (lib/server/openai-text.ts).
+// A follow-up reads the same reach, so it sees what the turn would.
+export const HISTORY_WINDOW = 150;
 const MAX_CHIPS = 3;
 const MAX_CHIP = 40;
 

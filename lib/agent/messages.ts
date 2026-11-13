@@ -23,7 +23,7 @@ export type Lang = "en" | "es";
 export const TERMS_URL = "yourpersona.com/legal";
 
 /** A text bubble after the opening stays within this many characters. */
-const BUBBLE_MAX = 200;
+export const BUBBLE_MAX = 200;
 
 // Persona's own opening, word for word as its line sends it every time: the hello, the capabilities with the consent
 // in one bubble, then the first ask. Everything after the naming is lowercase, as theirs is, apart from the names.

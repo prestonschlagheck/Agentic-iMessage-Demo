@@ -7,7 +7,7 @@ import { coarseDegree, isCallLive, locationOpen, nextBestAsk, pauseIntent, state
 import { deletedLine, locationSharedEvent, reactionEvent, resumedLine, stoppedLine, systemEvent, toEvent } from "@/lib/agent/messages";
 import { CALL_EVENT_WINDOW, followUpEvents, locationDenied, locationShared, welcomeBack, type FollowUp } from "@/lib/agent/follow-ups";
 import { cancelReminders, runTools, type ToolContext, type ToolEffects, type ToolOutput } from "@/lib/agent/tools";
-import { applyTextTurn, mockTextAgent, type TextAgent } from "@/lib/agent/text-agent";
+import { applyTextTurn, HISTORY_WINDOW, mockTextAgent, type TextAgent } from "@/lib/agent/text-agent";
 import { languageOf } from "@/lib/agent/mock/read";
 import { withProfile } from "@/lib/agent/profile";
 import { openAiTextAgent } from "@/lib/server/openai-text";
@@ -27,9 +27,7 @@ import type { Reading } from "@/lib/server/store/types";
 // The one path to session state. Every write is a compare-and-set on `version`, retried on conflict,
 // and every read settles the lazy call timers first, so no cron is needed.
 
-const EVENT_WINDOW = 300;
-// Enough for the text agent's window and the digest before it (lib/server/openai-text.ts).
-const HISTORY_WINDOW = 150;
+export const EVENT_WINDOW = 300;
 const CAS_ATTEMPTS = 3;
 const TURN_LEASE_MS = 20_000;
 const WELCOME_BACK_AFTER_MS = 60_000;

@@ -16,7 +16,7 @@ import { getModes, harnessEnabled } from "@/lib/server/config";
 import { DomainError } from "@/lib/server/http";
 import { createResponse, type OutputItem } from "@/lib/server/openai-text";
 import { rateLimit } from "@/lib/server/rate-limit";
-import { mutate, readSession, readSnapshot } from "@/lib/server/session-service";
+import { EVENT_WINDOW, mutate, readSession, readSnapshot } from "@/lib/server/session-service";
 import { getStore } from "@/lib/server/store";
 import { callEndReasonSchema, type Session, type SessionEvent, type Snapshot } from "@/lib/session/schema";
 import { asksToHangUp, callNote, isFarewell, linkUnsaid, needsAnswer, openingNote, silenceNote, silenceStep, threadNote, UNSPOKEN_END_CALL, valueNote } from "@/lib/voice/notes";
@@ -35,7 +35,6 @@ const VOICE_TEXT_MODEL = "gpt-6-luna";
 // keeps calling them still ends with something said, as Realtime always answers a tool result.
 const MAX_ROUNDS = 6;
 const TURN_BUDGET_MS = 20_000;
-const EVENT_WINDOW = 300;
 
 // `cut` is how far the agent's reply got before the user talked over it or the line went, as a fraction of it.
 const voiceBody = z.object({ text: z.string().trim().min(1).max(2_000).optional(), cut: z.number().gt(0).lt(1).optional() });

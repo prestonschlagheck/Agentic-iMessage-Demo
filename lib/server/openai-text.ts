@@ -2,6 +2,7 @@ import "server-only";
 import { z } from "zod";
 import { reactionTypeSchema, type EventKind, type NewEvent, type Session, type SessionEvent, type Slot, type TurnMetrics } from "@/lib/session/schema";
 import {
+  BUBBLE_MAX,
   CHIPS,
   eventText,
   OPENING,
@@ -91,8 +92,6 @@ const RATE_RETRY_MAX_MS = 1_500;
 const RATE_RETRY_FLOOR_MS = 250;
 const RATE_RETRIES = 2;
 const MAX_BUBBLES = 2;
-// A text bubble after the opening stays within this, so a line joined onto a full reply never runs past it.
-const BUBBLE_MAX = 200;
 
 const MODEL_KINDS = [...BRAIN_KINDS].filter((kind) => kind !== "contact_card");
 const ASK_TARGETS = ["agentName", "userName", "helpNeed", "gmail", "call_offer", "graduation_offer", "none"] as const;

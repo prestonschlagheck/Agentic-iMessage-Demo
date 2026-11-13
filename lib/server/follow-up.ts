@@ -3,7 +3,7 @@ import type { Session, SessionEvent } from "@/lib/session/schema";
 import type { FollowUp } from "@/lib/agent/follow-ups";
 import { REGEX_SYNTAX, toEvent, type Line } from "@/lib/agent/messages";
 import { recentAgentLines, repeatedParts } from "@/lib/agent/policy";
-import type { TextAgent, TextReply } from "@/lib/agent/text-agent";
+import { HISTORY_WINDOW, MAX_BUBBLE, type TextAgent, type TextReply } from "@/lib/agent/text-agent";
 import { briefError, logError } from "@/lib/server/http";
 import { getStore } from "@/lib/server/store";
 
@@ -12,8 +12,6 @@ import { getStore } from "@/lib/server/store";
 // gets the note and a hard deadline; on a timeout, an error or a reply that fails the checks, the template goes
 // out instead, so the text always lands.
 
-// The same reach as a text turn, so a follow-up sees what the turn would (lib/server/session-service.ts).
-const HISTORY_WINDOW = 150;
 /**
  * From the request that caused it (the hangup, the decline, the poll that found a timer due) to the model's last
  * chance. At 1.6 s about half of these went out as the template, so the agent gets long enough to answer in its own
@@ -28,7 +26,6 @@ export const FOLLOW_UP_DEADLINE_MS = 3_000;
 export type Known = { session: Session; history: SessionEvent[]; since: number; saved?: SessionEvent[] };
 // Covers the deadline and the writes after it, and frees itself quickly if this request dies.
 const LEASE_MS = FOLLOW_UP_DEADLINE_MS + 2_000;
-const MAX_BUBBLE = 1_000;
 
 const numbersIn = (text: string) => text.match(/\d+/g) ?? [];
 // A whole word or number, so "2" is not found inside "12".
