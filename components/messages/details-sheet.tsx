@@ -3,7 +3,7 @@
 import { useState, type ReactNode } from "react";
 import { CloseIcon, CompassIcon, EnvelopeIcon, PhoneIcon, ShareScreenIcon, VideoFillIcon } from "@/components/ios/icons";
 import { cx, PRESS } from "@/components/ios/ui";
-import { useStartOver } from "@/components/stage/start-over";
+import { useStartOver } from "@/lib/client/use-start-over";
 import { CHAT_BACKGROUNDS, useChatBackground } from "@/lib/client/chat-background";
 import { contactIdentity, PERSONA_NUMBERS } from "@/lib/client/contact";
 import type { Session } from "@/lib/session/schema";
