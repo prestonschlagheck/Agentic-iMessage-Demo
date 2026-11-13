@@ -1,7 +1,7 @@
 "use client";
 
 import { gainOf, ringerVolume } from "@/lib/client/volume";
-import { audioContext } from "@/lib/voice/audio-level";
+import { audioContext } from "@/lib/client/audio-context";
 
 // Every sound is synthesized with Web Audio, so there are no files to load and nothing borrowed.
 // Browsers keep audio locked until a user gesture; `unlock()` runs on the first one, and again as a call is answered
