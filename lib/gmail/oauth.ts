@@ -6,7 +6,7 @@ import { canGraduate } from "@/lib/agent/policy";
 import { LINK_TTL_MS } from "@/lib/agent/tools";
 import { mockAccount, mockInbox } from "@/lib/gmail/fixtures";
 import { inboxUnread, readInbox } from "@/lib/gmail/gmail-api";
-import { revokeGrant, revokeToken, saveGrant, TOKEN_URL, type Grant as GoogleGrant } from "@/lib/gmail/grant";
+import { mockToken, revokeGrant, revokeToken, saveGrant, TOKEN_URL, type Grant as GoogleGrant } from "@/lib/gmail/grant";
 import { businessInNeed, needQuery } from "@/lib/gmail/queries";
 import { inboxFinding } from "@/lib/gmail/value-fact";
 import { topFolders, upcomingEvents } from "@/lib/gmail/workspace-api";
@@ -174,7 +174,7 @@ async function mockGrant(code: string, scopes: string[], { category, need, timeZ
   const finding = inboxFinding(inbox, category, now);
   const fact = valueLine(finding, workspace, now, timeZone);
   // A fixture sign-in the tools read from lib/gmail/fixtures.ts, never Google.
-  const google: GoogleGrant = { accessToken: `mock:${code.replace(/^mock\./, "")}`, expiresAt: Number.MAX_SAFE_INTEGER, email: account.email, scopes };
+  const google: GoogleGrant = { accessToken: mockToken(code.replace(/^mock\./, "")), expiresAt: Number.MAX_SAFE_INTEGER, email: account.email, scopes };
   return { result: "connected", email: account.email, scopes, fact, anchors: finding.anchors, google, ...workspaceFacts(workspace, now, timeZone) };
 }
 

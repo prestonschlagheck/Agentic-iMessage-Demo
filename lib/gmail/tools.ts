@@ -2,7 +2,7 @@ import "server-only";
 import { z } from "zod";
 import { mockAccount } from "@/lib/gmail/fixtures";
 import { fold } from "@/lib/agent/policy";
-import { accessToken, saveGrant, type Grant } from "@/lib/gmail/grant";
+import { accessToken, isMockToken, mockFixtureId, saveGrant, type Grant } from "@/lib/gmail/grant";
 import {
   calendarEvents,
   createDraft,
@@ -190,7 +190,7 @@ function range(when: (typeof DAYS)[number], zone: string): [Date, Date] {
 
 // ---- mock mode: the fixture inbox, so every tool can be played without Google ----
 
-const fixtureId = (grant: Grant) => grant.accessToken.slice("mock:".length);
+const fixtureId = (grant: Grant) => mockFixtureId(grant.accessToken);
 
 function mockMail(grant: Grant) {
   const account = mockAccount(fixtureId(grant));
@@ -292,7 +292,7 @@ export async function runGoogleTool(name: GoogleToolName, raw: unknown, ctx: Goo
   const live = await accessToken(ctx.sessionId).catch((err: unknown) => (logError("google token", err), null));
   if (!live) return refuse("google_access_lost", "google access ran out: send a fresh link with send_gmail_link (reason more_access) so they can sign in again");
   const { token, grant } = live;
-  if (token.startsWith("mock:")) return runMock(grant, name, args, zone, ctx);
+  if (isMockToken(token)) return runMock(grant, name, args, zone, ctx);
 
   try {
     switch (name) {

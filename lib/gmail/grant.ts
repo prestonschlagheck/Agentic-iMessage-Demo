@@ -15,6 +15,12 @@ const REVOKE_URL = "https://oauth2.googleapis.com/revoke";
 /** Refreshed this long before Google's expiry, so a token never dies in the middle of a tool call. */
 const EARLY_MS = 60_000;
 
+// A fixture sign-in (lib/gmail/fixtures.ts) carries its fixture's id as its token. It never expires, refreshes or reaches Google.
+const MOCK_PREFIX = "mock:";
+export const mockToken = (fixtureId: string) => `${MOCK_PREFIX}${fixtureId}`;
+export const isMockToken = (token: string) => token.startsWith(MOCK_PREFIX);
+export const mockFixtureId = (token: string) => token.slice(MOCK_PREFIX.length);
+
 const grantSchema = z.object({
   accessToken: z.string(),
   refreshToken: z.string().optional(),
@@ -71,7 +77,7 @@ const refreshSchema = z.object({ access_token: z.string(), expires_in: z.number(
 export async function accessToken(sessionId: string): Promise<{ token: string; grant: Grant } | null> {
   const grant = await loadGrant(sessionId);
   if (!grant) return null;
-  if (grant.expiresAt - EARLY_MS > Date.now() || grant.accessToken.startsWith("mock:")) return { token: grant.accessToken, grant };
+  if (grant.expiresAt - EARLY_MS > Date.now() || isMockToken(grant.accessToken)) return { token: grant.accessToken, grant };
   if (!grant.refreshToken) return null;
   const res = await fetch(TOKEN_URL, {
     method: "POST",
@@ -119,6 +125,6 @@ export async function revokeGrant(sessionId: string): Promise<boolean> {
   const grant = await loadGrant(sessionId).catch(() => null);
   await getStore().setGoogleGrant(sessionId, null);
   const token = grant?.refreshToken ?? grant?.accessToken;
-  if (!token || token.startsWith("mock:")) return true;
+  if (!token || isMockToken(token)) return true;
   return revokeToken(token);
 }
