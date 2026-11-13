@@ -54,6 +54,8 @@ export const callDeclineRequest = z.object({
 export const callEndRequest = z.object({ attempt: z.number().int(), reason: callEndReasonSchema });
 
 export const heartbeatRequest = z.object({ attempt: z.number().int() });
+/** The most voice-diag entries one heartbeat carries: the browser caps a batch at this, and the server keeps no more. */
+export const DIAG_CAP = 50;
 
 export const transcriptRequest = z.object({
   attempt: z.number().int(),

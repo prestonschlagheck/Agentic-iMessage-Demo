@@ -1,15 +1,13 @@
 import "server-only";
 import { z } from "zod";
 import { systemEvent } from "@/lib/agent/messages";
-import { heartbeatRequest } from "@/lib/api/contract";
+import { DIAG_CAP, heartbeatRequest } from "@/lib/api/contract";
 import { appendEvents } from "@/lib/server/session-service";
 
 // A live call's own record of how its replies went (lib/client/dev-trace.ts voiceDiag), which the browser sends with
 // its heartbeat. Realtime runs between the browser and OpenAI, so without it the archive cannot say why a call went
 // quiet: a reply that failed, an error, the watchdog asking again.
 
-/** The most entries one row keeps, as the browser caps a batch (DIAG_CAP). */
-const DIAG_CAP = 50;
 // "12.3:done:failed:rate_limit_exceeded": seconds into the call, then a code. Nothing else gets through, so no words can.
 const ENTRY = /^\d{1,5}\.\d:[a-z0-9_.:]{1,64}$/;
 

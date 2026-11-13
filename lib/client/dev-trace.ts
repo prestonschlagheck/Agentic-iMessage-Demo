@@ -2,6 +2,8 @@
 // was cut off, an error, a response asked for), added to the session's local log by /api/dev-log. A no-op in production.
 // voiceDiag, at the end, is the one piece that runs in production.
 
+import { DIAG_CAP } from "@/lib/api/contract";
+
 const dev = process.env.NODE_ENV === "development";
 
 export function devTrace(entry: Record<string, unknown>): void {
@@ -57,8 +59,8 @@ export function traceSent(event: { type?: string; item?: { type?: string; call_i
 // Production too, unlike everything above: a live call's own record of how its replies went, as codes and nothing else
 // (a reply's status, an error code, a watchdog that fired), so a call that went quiet can be read back afterwards.
 
-/** The most entries one batch carries. Past it, entries are only counted, as one "lost" entry. */
-export const DIAG_CAP = 50;
+// Past DIAG_CAP, entries are only counted, as one "lost" entry.
+export { DIAG_CAP };
 // A reply that went as it should, or that they talked over: kept with the rest, but never a reason to send a batch early.
 // One that completed with no output at all reached no one, so it is not routine.
 const ROUTINE = /^done:(?:completed(?::n[1-9]\d*)?|none(?::n\d+)?|cancelled(?::[a-z_]+)?(?::n\d+)?)$/;
